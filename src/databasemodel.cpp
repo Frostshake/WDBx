@@ -81,6 +81,10 @@ QVariant DatabaseModel::data(const QModelIndex& index, int role) const
     if (_db) {
         const auto& rec = _records[row];
 
+        if (rec.data.size() == 0) {
+            return QVariant();
+        }
+
         switch (role) {
         case Qt::DisplayRole:
         {
@@ -99,7 +103,7 @@ QVariant DatabaseModel::data(const QModelIndex& index, int role) const
                         display = QString::fromUtf8(view.data(), view.size());
                     }
                     else if constexpr (std::is_floating_point_v<val_t>) {
-                        display = QString::number(val);
+                        display = QString::number(val, 'g', 14);
                     }
                     else {
                         const auto& format = _columns[col].format;
