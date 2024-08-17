@@ -1,0 +1,12 @@
+{
+  "name": "wdbx",
+  "description": "Database viewer for world of warcraft.",
+  "dependencies": [
+    "qtbase",
+    "casclib",
+    "stormlib",
+    "bzip2",
+    "zlib",
+    "wdbreader"
+  ]
+}
