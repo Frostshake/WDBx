@@ -92,6 +92,7 @@ CASCFilesystem::CASCFilesystem(const std::filesystem::path& root, const std::str
 {
     auto casc_locale = WDBReader::Filesystem::CASCLocaleConvert(locale);
     _fs = std::make_unique<WDBReader::Filesystem::CASCFilesystem>(root, casc_locale, product);
+    loadTactKeys();
     loadListFile();
 }
 
@@ -107,6 +108,33 @@ std::unique_ptr<WDBReader::Filesystem::FileSource> CASCFilesystem::open(const st
 	return nullptr;
 }
 
+void CASCFilesystem::loadTactKeys()
+{
+    std::ifstream stream("tact-keys.txt");
+    std::string line;
+
+    // format is '{16 char key}{space}{32 char key}'
+
+    while (std::getline(stream, line)) {
+        if (line.size() < (16 + 1 + 32)) {
+            continue;
+        }
+
+        std::string_view key_str(line.data(), 16);
+        std::string_view val_str(line.data() + 16 + 1, 32);
+        uint64_t key;
+        const auto key_end = key_str.data() + key_str.size();
+        const auto res = std::from_chars(key_str.data(), key_end, key, 16);
+
+        if (res.ec == std::errc{} && res.ptr == key_end)
+        {
+            const bool ok = CascAddStringEncryptionKey(_fs->getHandle(), key, std::string(val_str).c_str());
+            assert(ok);
+        }
+    }
+
+}
+
 void CASCFilesystem::loadListFile()
 {
     std::ifstream stream("listfile.csv");
@@ -114,7 +142,7 @@ void CASCFilesystem::loadListFile()
 
     std::map<std::string, WDBReader::Filesystem::CASCFileUri> content;
 
-    while (stream >> line) {
+    while (std::getline(stream, line)) {
         const auto sep = line.find_first_of(';');
 
         if (sep == std::string::npos) {

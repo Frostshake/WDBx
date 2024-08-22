@@ -51,6 +51,7 @@ public:
     virtual std::unique_ptr<WDBReader::Filesystem::FileSource> open(const std::string&) override;
 
 protected:
+    void loadTactKeys();
     void loadListFile();
     std::unique_ptr<WDBReader::Filesystem::CASCFilesystem> _fs;
     std::vector<WDBReader::Filesystem::CASCFileUri> _fileIds;
