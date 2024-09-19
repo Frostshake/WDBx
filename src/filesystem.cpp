@@ -76,7 +76,7 @@ void MPQFilesystem::findDBCs()
                     break;
                 }
 
-                if (line.ends_with(".dbc") || line.ends_with(".DBC")) {
+                if (line.ends_with(".dbc") || line.ends_with(".DBC") || line.ends_with(".db2") || line.ends_with(".DB2")) {
                     found.emplace_back(line);
                 }
             }

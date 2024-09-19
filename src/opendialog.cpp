@@ -155,7 +155,7 @@ void OpenDialog::autoDetect()
 
             QStringList data{
                 build_str,
-                QString::fromStdString(install.locales[0]),
+                install.locales.size() > 0 ? QString::fromStdString(install.locales[0]) : "",
                 QString::fromStdString(install.name)
             };
 

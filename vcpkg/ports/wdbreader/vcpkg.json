@@ -1,6 +1,6 @@
 {
     "name": "wdbreader",
-    "version-date": "2024-08-11",
+    "version-date": "2024-09-19",
     "description": "C++ library for reading World of Warcraft database files.",
     "homepage": "https://github.com/frostshake/wdbreader",
     "dependencies": [
