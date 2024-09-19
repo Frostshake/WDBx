@@ -38,6 +38,8 @@ DatabaseModel::DatabaseModel(std::shared_ptr<Database> db, QObject *parent)
                 header.tooltip += " " + data_size;
             }
 
+            header.format.showSigned = field.annotation.isSigned;
+
             _columns.push_back(std::move(header));
         };
 
