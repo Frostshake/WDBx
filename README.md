@@ -34,3 +34,9 @@ FieldName IN {1,2,3}
 (FieldA >= FieldB OR FieldC < FieldD)
 ((a == b OR c == d) AND (e == f))
 ```
+
+Important points:
+- The left part of a condition must always be an identifier, e.g `(must_be_col == literal_or_col)`
+- If multiple conditions are used, they must be wrapped in round braces.
+- Rounding/casting inconsistencies can be expected, e.g comparing floats and integers.
+- The query editor is a convience feature, and many cases are likely untested - for highest accuracy, prefer exporting to SQL and process using appropriate tool.
