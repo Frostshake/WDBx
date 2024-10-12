@@ -14,6 +14,8 @@ Table::Table(QWidget *parent) :
     ui(new Ui::Table)
 {
     ui->setupUi(this);
+    ui->widgetEditor->table = this;
+    editorVisible(false);
 
     setupDataTable();
     setupSchemaTable();
@@ -82,9 +84,11 @@ void Table::openDatabase(std::unique_ptr<Database> db)
 
     ui->tableViewTable->resizeColumnToContents(0);
 
+   auto sig_view = _db->getDataSource()->signature().str();
+
     ui->labelTableName->setText(QString::fromStdString(_db->getName()));
     ui->labelTableFileSize->setText(this->locale().formattedDataSize(_db->getFileSize()));
-    ui->labelTableType->setText(QString::fromStdString(_db->getType()).toUpper());
+    ui->labelTableType->setText(QString::fromUtf8(sig_view.data(), sig_view.size()).toUpper());
     ui->labelTableRows->setText(QString::number(_db->getRowCount(), 10));
 
     dataHeaderMenu = new QMenu(ui->tableViewData->horizontalHeader());
@@ -144,6 +148,22 @@ void Table::clearDatabase()
 void Table::setPage(size_t page)
 {
     dataModel->setPage(page);
+}
+
+void Table::editorVisible(bool visible)
+{
+    if (!visible) {
+        clearQuery();
+    }
+
+    ui->widgetEditor->setVisible(visible);
+}
+
+bool Table::editorToggleVisible()
+{
+    bool vis = ui->widgetEditor->isVisible();
+    editorVisible(!vis);
+    return !vis;
 }
 
 void Table::setupDataTable()

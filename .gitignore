@@ -38,3 +38,9 @@ install/
 vcpkg_installed/
 CMakeUserPresets.json
 CMakeLists.txt.user
+CMakeFiles
+CMakeCache.txt
+
+tree-sitter-wdbx/bindings/
+tree-sitter-wdbx/node_modules/
+tree-sitter-wdbx/src/

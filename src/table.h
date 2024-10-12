@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include "query.h"
 
 namespace Ui {
 class Table;
@@ -30,6 +31,21 @@ public:
     }
 
     void setPage(size_t page);
+
+    void editorVisible(bool visible);
+    bool editorToggleVisible();
+
+    void query(Query&& q) {
+        if (_db) {
+            dataModel->query(std::move(q));
+        }
+    }
+
+    void clearQuery() {
+        if (_db) {
+            dataModel->clearQuery();
+        }
+    }
 
 signals:
     void paginationChanged(bool has_db, const Pagination& page);

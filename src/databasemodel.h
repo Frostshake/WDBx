@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <memory>
 #include <vector>
+#include "query.h"
 
 struct Pagination {
 public:
@@ -34,6 +35,13 @@ public:
         WDBReader::Database::Field::Type type;
     };
 
+    struct QueryContext {
+        QueryContext(Query&& q) : query(std::move(q)) {}
+        Query query;
+        std::map<Identifier, std::pair<size_t, size_t>> id_lookup;
+        std::map<size_t, size_t> page_indexes;
+    };
+
     explicit DatabaseModel(std::shared_ptr<Database> db, QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -54,10 +62,16 @@ public:
 
     uint64_t convertToDbIndex(int model_index);
 
+    void query(Query&& q);
+    void clearQuery();
+
 signals:
     void paginationChanged(bool has_db, const Pagination& page);
 
 protected:
+
+    bool loop_conditions(const Query& q, bool short_circuit, std::function<bool(const Condition&)> callback) const;
+    bool evaluateRecord(const WDBReader::Database::RuntimeRecord& rec) const;
 
     void loadPage(size_t page);
 
@@ -66,6 +80,8 @@ protected:
 
     std::vector<Column> _columns;
     std::vector<WDBReader::Database::RuntimeRecord> _records;
+
+    std::optional<QueryContext> _query_context;
 
     friend class DataExport;
 };

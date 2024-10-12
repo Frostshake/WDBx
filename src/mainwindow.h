@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
+#include <QToolButton>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <WDBReader/Detection.hpp>
@@ -44,8 +45,8 @@ private:
 
     QLabel* labelStatusClientVer;
     QLabel* labelStatusPage;
-    QPushButton* buttonStatusPrev;
-    QPushButton* buttonStatusNext;
+    QToolButton* buttonStatusPrev;
+    QToolButton* buttonStatusNext;
 
     std::unique_ptr<Filesystem> _fs;
     std::optional<WDBReader::ClientInfo> _clientInfo;

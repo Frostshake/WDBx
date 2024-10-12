@@ -28,18 +28,18 @@ MainWindow::MainWindow(QWidget *parent)
     labelStatusPage->setContentsMargins(QMargins(6, 0, 6, 0));
     ui->statusbar->addPermanentWidget(labelStatusPage);
 
-    buttonStatusPrev = new QPushButton();
+    buttonStatusPrev = new QToolButton();
     buttonStatusPrev->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));
     buttonStatusPrev->setToolTip("Previous");
-    connect(buttonStatusPrev, &QPushButton::pressed, [&]() {
+    connect(buttonStatusPrev, &QToolButton::pressed, [&]() {
         movePage(-1);
     });
     ui->statusbar->addPermanentWidget(buttonStatusPrev);
 
-    buttonStatusNext = new QPushButton();
+    buttonStatusNext = new QToolButton();
     buttonStatusNext->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
     buttonStatusNext->setToolTip("Next");
-    connect(buttonStatusNext, &QPushButton::pressed, [&]() {
+    connect(buttonStatusNext, &QToolButton::pressed, [&]() {
         movePage(+1);
     });
     ui->statusbar->addPermanentWidget(buttonStatusNext);
@@ -72,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
+    connect(ui->actionQuery_Editor, &QAction::triggered, [&]() {
+        ui->actionQuery_Editor->setChecked(ui->widgetTable->editorToggleVisible());
+    });
+
     databasesModel = new QStandardItemModel();
     databasesProxy = new QSortFilterProxyModel();
     databasesProxy->setSourceModel(databasesModel);
@@ -95,7 +99,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lineEditDatabases, &QLineEdit::textChanged, [&](const QString& text) {
         databasesProxy->setFilterWildcard(text);
     });
-
 
     showOpenDialog();
 }

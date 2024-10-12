@@ -11,12 +11,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 find_package(Qt6 REQUIRED COMPONENTS Widgets REQUIRED)
 
 find_package(WDBReader CONFIG REQUIRED)
 find_package(StormLib CONFIG REQUIRED)
 find_package(CascLib CONFIG REQUIRED)
+find_package(unofficial-tree-sitter CONFIG REQUIRED)
 
 add_subdirectory(src)
 
@@ -45,6 +45,15 @@ set(PROJECT_SOURCES
         src/table.cpp
         src/table.h
         src/table.ui
+        src/queryeditor.cpp
+        src/queryeditor.h
+        src/queryeditor.ui
+        src/query.h
+        src/tree_sitter/parser.c
+        src/tree_sitter/parser.h
+        src/tree_sitter/array.h
+        src/tree_sitter/alloc.h
+        src/tree_sitter/tree-sitter-WDBx.h
 )
 
 qt_add_executable(WDBx
@@ -64,16 +73,17 @@ set_target_properties(WDBx PROPERTIES
 )
 
 target_compile_definitions(WDBx PRIVATE CASCLIB_NO_AUTO_LINK_LIBRARY)
-if(BUILD_SHARED_LIBS)
-    target_link_libraries(WDBx PRIVATE CascLib::casc)
-else()
+# if(BUILD_SHARED_LIBS)
+    # target_link_libraries(WDBx PRIVATE CascLib::casc)
+# else()
     target_link_libraries(WDBx PRIVATE CascLib::casc_static)
-endif()
+# endif()
 
 target_compile_definitions(WDBx PRIVATE STORMLIB_NO_AUTO_LINK)
 target_link_libraries(WDBx PRIVATE StormLib::storm)
 
 target_link_libraries(WDBx PRIVATE WDBReader::WDBReader)
+target_link_libraries(WDBx PRIVATE unofficial::tree-sitter::tree-sitter)
 
 if(WIN32)
     target_link_libraries(WDBx PRIVATE propsys.lib)
