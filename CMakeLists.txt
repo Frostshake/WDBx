@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(WDBx VERSION 0.1 LANGUAGES CXX)
+project(WDBx VERSION 0.2 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

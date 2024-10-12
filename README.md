@@ -32,4 +32,5 @@ FieldName == "value"
 FieldArray[0] != 123.45
 FieldName IN {1,2,3}
 (FieldA >= FieldB OR FieldC < FieldD)
+((a == b OR c == d) AND (e == f))
 ```
