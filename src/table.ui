@@ -79,7 +79,7 @@
            </sizepolicy>
           </property>
          </widget>
-            <widget class="QueryEditor" name="widgetEditor" native="true"/>
+         <widget class="QueryEditor" name="widgetEditor" native="true"/>
         </widget>
        </item>
       </layout>
@@ -140,6 +140,23 @@
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Rows:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="labelTableRows">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -162,14 +179,31 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>Rows:</string>
+               <string>Table hash:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="labelTableRows">
+             <widget class="QLabel" name="labelTableHash">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Layout hash:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="labelLayoutHash">
               <property name="text">
                <string>TextLabel</string>
               </property>

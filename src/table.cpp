@@ -84,12 +84,27 @@ void Table::openDatabase(std::unique_ptr<Database> db)
 
     ui->tableViewTable->resizeColumnToContents(0);
 
-   auto sig_view = _db->getDataSource()->signature().str();
+   auto format = _db->getDataSource()->format();
+   auto sig_view = format.signature.str();
 
     ui->labelTableName->setText(QString::fromStdString(_db->getName()));
     ui->labelTableFileSize->setText(this->locale().formattedDataSize(_db->getFileSize()));
     ui->labelTableType->setText(QString::fromUtf8(sig_view.data(), sig_view.size()).toUpper());
     ui->labelTableRows->setText(QString::number(_db->getRowCount(), 10));
+
+    if (format.tableHash) {
+        ui->labelTableHash->setText("0x" + QString::number(format.tableHash.value(), 16).toUpper());
+    }
+    else {
+        ui->labelTableHash->setText("");
+    }
+
+    if (format.layoutHash) {
+        ui->labelLayoutHash->setText("0x" + QString::number(format.layoutHash.value(), 16).toUpper());
+    }
+    else {
+        ui->labelLayoutHash->setText("");
+    }
 
     dataHeaderMenu = new QMenu(ui->tableViewData->horizontalHeader());
 
