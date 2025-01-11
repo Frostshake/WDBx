@@ -7,7 +7,6 @@
     "qtbase",
     "stormlib",
     "tree-sitter",
-    "wdbreader",
-    "zlib"
+    "wdbreader"
   ]
 }

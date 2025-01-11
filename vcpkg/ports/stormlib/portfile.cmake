@@ -12,6 +12,7 @@ vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -DSTORM_UNICODE=${STORM_UNICODE}
+        -DSTORM_USE_BUNDLED_LIBRARIES=ON
 )
 
 vcpkg_cmake_install()

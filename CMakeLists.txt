@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(WDBx VERSION 0.2 LANGUAGES CXX)
+project(WDBx VERSION 0.2 LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -85,8 +85,14 @@ target_link_libraries(WDBx PRIVATE StormLib::storm)
 target_link_libraries(WDBx PRIVATE WDBReader::WDBReader)
 target_link_libraries(WDBx PRIVATE unofficial::tree-sitter::tree-sitter)
 
+if (MSVC)
+    target_compile_options(WDBx PRIVATE /bigobj)
+    set_property(TARGET WDBx PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:WDBx>")
+endif()
+
 if(WIN32)
     target_link_libraries(WDBx PRIVATE propsys.lib)
+    target_compile_definitions(WDBx PUBLIC NOMINMAX)
 endif()
 
 target_compile_definitions(WDBx PUBLIC WDBX_VERSION="${CMAKE_PROJECT_VERSION}")
@@ -94,5 +100,10 @@ target_compile_definitions(WDBx PUBLIC WDBX_VERSION="${CMAKE_PROJECT_VERSION}")
 install(TARGETS WDBx
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+add_custom_command(TARGET WDBx POST_BUILD 
+    COMMAND Qt6::windeployqt
+    ARGS $<TARGET_FILE:WDBx>
+)
 
 qt_finalize_executable(WDBx)
